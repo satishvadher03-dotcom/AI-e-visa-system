@@ -15,12 +15,25 @@ import {
   FileCheck,
   UserCheck
 } from 'lucide-react';
+import heroOfficeImage from '../../assets/images/hero_immigration_office_1792940222891.jpg';
 
 export const HomePage: React.FC = () => {
   const navigate = useNavigate();
   const [activeDirection, setActiveDirection] = useState<'india_to_world' | 'world_to_india'>('india_to_world');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const [heroImgSrc, setHeroImgSrc] = useState<string>(heroOfficeImage);
+  const [heroImgError, setHeroImgError] = useState<boolean>(false);
+
+  const handleHeroImgError = () => {
+    if (heroImgSrc === heroOfficeImage) {
+      setHeroImgSrc('/images/hero_immigration_office.jpg');
+    } else if (heroImgSrc === '/images/hero_immigration_office.jpg') {
+      setHeroImgSrc('/images/visa-consultation.jpg');
+    } else {
+      setHeroImgError(true);
+    }
+  };
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -224,13 +237,34 @@ export const HomePage: React.FC = () => {
           {/* Hero Visual */}
           <div className="lg:col-span-5">
             <div className="relative rounded-2xl overflow-hidden border border-slate-200 shadow-sm bg-slate-100 aspect-16/9 lg:aspect-auto lg:h-[460px]">
-              <img
-                src="/src/assets/images/hero_immigration_office_1792940222891.jpg"
-                alt="AuraVisa Global contemporary consultation office"
-                className="w-full h-full object-cover"
-                referrerPolicy="no-referrer"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent flex items-end p-6">
+              {!heroImgError ? (
+                <img
+                  src={heroImgSrc}
+                  alt="AuraVisa Global contemporary consultation office"
+                  className="w-full h-full object-cover"
+                  loading="eager"
+                  decoding="async"
+                  onError={handleHeroImgError}
+                />
+              ) : (
+                <div className="w-full h-full bg-slate-50 flex flex-col items-center justify-center p-8 text-center space-y-4">
+                  <div className="w-16 h-16 rounded-2xl bg-blue-50 border border-blue-200 text-blue-600 flex items-center justify-center shadow-xs">
+                    <Globe className="w-8 h-8" />
+                  </div>
+                  <div className="space-y-1">
+                    <div className="text-xs font-bold uppercase tracking-wider text-blue-600">AuraVisa Global</div>
+                    <div className="text-base font-bold text-slate-800">Contemporary Visa Consultation Office</div>
+                    <p className="text-xs text-slate-500 max-w-xs mx-auto">
+                      Registered immigration advisors & bilateral mobility practice.
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-2 text-xs font-medium text-slate-600 bg-white px-3 py-1.5 rounded-lg border border-slate-200 shadow-xs">
+                    <ShieldCheck className="w-4 h-4 text-emerald-600" />
+                    <span>ISO 27001 Data Certified Practice</span>
+                  </div>
+                </div>
+              )}
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent flex items-end p-6 pointer-events-none">
                 <div className="text-white space-y-1">
                   <div className="text-xs font-semibold uppercase tracking-wider text-blue-200">Advisory Standards</div>
                   <div className="text-sm font-medium">Global Mobility Practice with Registered Immigration Advisors</div>

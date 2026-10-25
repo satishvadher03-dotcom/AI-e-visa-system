@@ -26,6 +26,9 @@ async function startServer() {
     res.json({ status: 'ok', service: 'AuraVisa Global API', timestamp: new Date().toISOString() });
   });
 
+  // Serve public assets (images, favicon, etc.)
+  app.use(express.static(path.resolve(__dirname, 'public')));
+
   const isProduction = process.env.NODE_ENV === 'production';
 
   if (!isProduction) {
