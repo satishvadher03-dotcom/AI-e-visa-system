@@ -1,0 +1,6 @@
+{
+  "name": "AuraVisa Global",
+  "description": "AI-powered visa and immigration consultancy platform for travelers between India and the world.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
